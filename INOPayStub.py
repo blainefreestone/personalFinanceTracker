@@ -67,7 +67,7 @@ class INOPayStub:
         HOURS = 31
         DEDUCTIONSNAME = 35
 
-        # Open pdf file.
+        # Open and access pdf file.
         payStubPdfObj = fitz.open(self.__filepath)
         for page in payStubPdfObj:
             # Divide pdf file into text block tuples.
