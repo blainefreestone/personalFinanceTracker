@@ -1,11 +1,10 @@
-import datetime, PyPDF2
+import datetime, fitz
 
 '''
 Members:
 filepath:str
 startDate:datetime
 endDate:datetime
-documentDate:datetime
 hours:float
 rate:float
 preDeductionPay:float
@@ -23,5 +22,25 @@ class INOPayStub:
         self.readPayStub()
     
     def readPayStub(self):
-        with open(self.__filepath, 'rb') as pdfFileObject:
-            print("Not implemented")
+        BLOCK_NO = 5
+        BLOCK_TEXT = 4
+
+        DEDUCTIONSAMOUNT = 12
+        PREDEDUCTIONPAY = 21
+        NETPAY = 22
+        DATES = 27
+        RATE = 29
+        HOURS = 31
+        DEDUCTIONSNAME = 35
+
+        payStubPdfObj = fitz.open(self.__filepath)
+        for page in payStubPdfObj:
+            blocks = page.get_text("blocks")
+            
+            for block in blocks:
+                if block[BLOCK_NO] not in (12, 21, 22, 27, 29, 31, 35, 39):
+                    continue
+
+                print(f"{block[BLOCK_NO]}) {block[BLOCK_TEXT].strip()}")
+            
+payStub = INOPayStub("payStub.pdf")
