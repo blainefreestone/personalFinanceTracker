@@ -1,4 +1,4 @@
-import datetime, fitz
+import datetime, fitz, pickle
 
 class INOPayStub:
     """ 
@@ -32,6 +32,8 @@ class INOPayStub:
     -------
     readPayStub()
         Opens and reads the pdf at the filepath and sets member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
+    getSerializeByteStream()
+        Serializing this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
     """
 
     def __init__(self, filepath:str):
@@ -102,3 +104,9 @@ class INOPayStub:
             while (deductionsIndex < len(deductionAmounts)):
                 self.__deductions[deductionNames[deductionsIndex].strip()] = float(deductionAmounts[deductionsIndex].strip())
                 deductionsIndex += 1
+
+    def getSerializeByteStream(self):
+        """
+        Serializing this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
+        """
+        return pickle.dumps(self)
