@@ -32,9 +32,11 @@ class INOPayStub(FinancialDocumentInterface):
     Methods
     -------
     readPayStub()
-        Opens and reads the pdf at the filepath and sets member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
+        Open and read the pdf at the filepath and sets member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
     getSerializeByteStream()
-        Serializing this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
+        Serialize this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
+    createExcelRepresentation()
+        Create an excel that represents the data contained in this instance of the INOPayStub class.
     """
 
     def __init__(self, filepath:str):
@@ -45,19 +47,13 @@ class INOPayStub(FinancialDocumentInterface):
             the filepath of the paystub as a pdf
         """
         self.__filepath = filepath 
-        self.readPayStub()
+        self.readFinancialDocument()
     
     def __str__(self):
         return f"Filepath: {self.__filepath}\nPre Deduction Pay: {self.__preDeductionPay}\nDeductions: {self.__deductions}\nNet Pay: {self.__netPay}\nStart Date: {self.__startDate}\nEnd Date: {self.__endDate}\nRate: {self.__rate}\nHours: {self.__hours}\n"
 
     def readFinancialDocument(self):
-        """
-        Opens and reads the pdf at the filepath and initializes member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
-        Raises
-        ------
-        AssertionError as DeductionAmountsAndNamesDoNotMatch
-            If the deductionNames and deductionAmounts lists do not have the same lengths (i.e., there isn't a deduction name for each deduction amount).
-        """
+        """ Open and read the pdf at the filepath and sets member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions. """
         # Text block tuple indexes.
         BLOCK_NO = 5
         BLOCK_TEXT = 4
@@ -107,7 +103,9 @@ class INOPayStub(FinancialDocumentInterface):
                 deductionsIndex += 1
 
     def getSerializeByteStream(self):
+        """ Serialize this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file."""
         return super().getSerializedByteStream()
     
     def createExcelRepresentation(self):
+        """Create an excel that represents the data contained in this instance of the INOPayStub class."""
         pass
