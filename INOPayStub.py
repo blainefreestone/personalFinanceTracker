@@ -1,6 +1,7 @@
-import datetime, fitz, pickle
+import datetime, fitz
+from FinancialDocumentInterface import FinancialDocumentInterface
 
-class INOPayStub:
+class INOPayStub(FinancialDocumentInterface):
     """ 
     Saves and represents the important information contained in a single In-N-Out paystub as a pdf. 
     
@@ -49,7 +50,7 @@ class INOPayStub:
     def __str__(self):
         return f"Filepath: {self.__filepath}\nPre Deduction Pay: {self.__preDeductionPay}\nDeductions: {self.__deductions}\nNet Pay: {self.__netPay}\nStart Date: {self.__startDate}\nEnd Date: {self.__endDate}\nRate: {self.__rate}\nHours: {self.__hours}\n"
 
-    def readPayStub(self):
+    def readFinancialDocument(self):
         """
         Opens and reads the pdf at the filepath and initializes member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
         Raises
@@ -106,7 +107,7 @@ class INOPayStub:
                 deductionsIndex += 1
 
     def getSerializeByteStream(self):
-        """
-        Serializing this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
-        """
-        return pickle.dumps(self)
+        return super().getSerializedByteStream()
+    
+    def createExcelRepresentation(self):
+        pass

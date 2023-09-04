@@ -1,6 +1,7 @@
-import datetime, fitz, pickle
+import datetime, fitz
+from FinancialDocumentInterface import FinancialDocumentInterface
 
-class TithingSlip:
+class TithingSlip(FinancialDocumentInterface):
     def __init__(self, filepath:str):
         self.__filepath = filepath
         self.readTithingSlip()
@@ -8,7 +9,7 @@ class TithingSlip:
     def __str__(self):
         return f"Date: {self.__date}\nTithing Amount: {self.__tithingAmount}"
 
-    def readTithingSlip(self):
+    def readFinancialDocument(self):
         # Text block tuple indexes.
         BLOCK_NO = 5
         BLOCK_TEXT = 4
@@ -30,3 +31,11 @@ class TithingSlip:
             # Save tithng amount as a float.
             tithingAmountStringElements = blocks[TITHINGAMOUNT][BLOCK_TEXT].strip().split()
             self.__tithingAmount = float(tithingAmountStringElements[1])
+
+            print("HELLO   ")
+
+    def getSerializedByteStream(self):
+        return super().getSerializedByteStream()
+    
+    def createExcelRepresentation(self):
+        pass
