@@ -27,10 +27,23 @@ class SideIncomeStatement(FinancialDocumentInterface):
     """
 
     def __str__(self):
-        pass
+        return f"Date: {self.__date}\nIncome Amount: {self.__incomeAmount}\nSource: {self.__source}"
     
     def readFinancialDocument(self):
-        return super().readFinancialDocument()
+        DATE = 0
+        INCOMEAMOUNT = 1
+        SOURCE = 2
+        
+        with open(self.__filepath, "r") as sideIncomeStatementTxt:
+            lines = sideIncomeStatementTxt.readlines()
+
+            dateString = lines[DATE][:18]
+            self.__date = datetime.datetime.strptime(dateString, "%m/%d/%Y")
+
+            incomeString = lines[INCOMEAMOUNT][:16]
+            self.__incomeAmount = float(incomeString)
+
+            self.__source = lines[SOURCE][:8]
     
     def getSerializedByteStream(self):
         return super().getSerializedByteStream()
