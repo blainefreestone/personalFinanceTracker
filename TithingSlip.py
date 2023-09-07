@@ -18,22 +18,13 @@ class TithingSlip(FinancialDocumentInterface):
 
     Methods
     -------
-    readPayStub()
+    readFinancialDocument()
         Open and read the pdf at the filepath and sets member variables: __date, __tithingAmount
     getSerializeByteStream()
         Serialize this instance of the TithingSlip class as a pickle byte stream which can be saved to a save file.
     createExcelRepresentation()
         Create an excel that represents the data contained in this instance of the TithingSlip class.
     """
-    def __init__(self, filepath:str):
-        """ 
-        Parameters
-        ----------
-        filepath : str
-            the filepath of the paystub as a pdf
-        """
-        self.__filepath = filepath
-        self.readFinancialDocument()
 
     def __str__(self):
         return f"Date: {self.__date}\nTithing Amount: {self.__tithingAmount}"

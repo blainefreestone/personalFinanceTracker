@@ -1,6 +1,10 @@
 import pickle
 
 class FinancialDocumentInterface:
+    def __init__(self, filepath:str):
+        self.__filepath = filepath
+        self.readFinancialDocument()
+
     def readFinancialDocument(self):
         """ Open and read financial document file and extract important data from the text. """
         pass
@@ -10,5 +14,5 @@ class FinancialDocumentInterface:
         return pickle.dumps(self)
 
     def createExcelRepresentation(self):
-        """ Creates an excel sheet that represents the data contained in the current instance of the class. """
+        """ Create an excel sheet that represents the data contained in the current instance of the class. """
         pass

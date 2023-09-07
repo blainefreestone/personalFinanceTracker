@@ -31,23 +31,13 @@ class INOPayStub(FinancialDocumentInterface):
 
     Methods
     -------
-    readPayStub()
+    readFinancialDocument()
         Open and read the pdf at the filepath and sets member variables: __preDeductionPay, __netPay, __startDate, __endDate, __rate, __hours, and __deductions.
     getSerializeByteStream()
         Serialize this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
     createExcelRepresentation()
         Create an excel that represents the data contained in this instance of the INOPayStub class.
     """
-
-    def __init__(self, filepath:str):
-        """ 
-        Parameters
-        ----------
-        filepath : str
-            the filepath of the paystub as a pdf
-        """
-        self.__filepath = filepath 
-        self.readFinancialDocument()
     
     def __str__(self):
         return f"Filepath: {self.__filepath}\nPre Deduction Pay: {self.__preDeductionPay}\nDeductions: {self.__deductions}\nNet Pay: {self.__netPay}\nStart Date: {self.__startDate}\nEnd Date: {self.__endDate}\nRate: {self.__rate}\nHours: {self.__hours}\n"
