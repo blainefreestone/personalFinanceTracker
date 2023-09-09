@@ -25,6 +25,9 @@ class SideIncomeStatement(FinancialDocumentInterface):
     createExcelRepresentation()
         Create an excel that represents the data contained in this instance of the SideIncomeStatement class.    
     """
+    def __init__(self, filepath:str):
+        self.__filepath = filepath
+        self.readFinancialDocument()
 
     def __str__(self):
         return f"Date: {self.__date}\nIncome Amount: {self.__incomeAmount}\nSource: {self.__source}"
@@ -37,16 +40,16 @@ class SideIncomeStatement(FinancialDocumentInterface):
         with open(self.__filepath, "r") as sideIncomeStatementTxt:
             lines = sideIncomeStatementTxt.readlines()
 
-            dateString = lines[DATE][:18]
-            self.__date = datetime.datetime.strptime(dateString, "%m/%d/%Y")
+            dateString = lines[DATE][18:]
+            self.__date = datetime.datetime.strptime(dateString.strip(), "%m/%d/%Y")
 
-            incomeString = lines[INCOMEAMOUNT][:16]
-            self.__incomeAmount = float(incomeString)
+            incomeString = lines[INCOMEAMOUNT][16:]
+            self.__incomeAmount = float(incomeString.strip())
 
-            self.__source = lines[SOURCE][:8]
+            self.__source = lines[SOURCE][8:].strip()
     
     def getSerializedByteStream(self):
         return super().getSerializedByteStream()
     
     def createExcelRepresentation(self):
-        return super().createExcelRepresentation()
+        return super().createExcelRepresentation();

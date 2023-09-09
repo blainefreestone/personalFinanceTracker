@@ -1,9 +1,6 @@
 import pickle
 
 class FinancialDocumentInterface:
-    def __init__(self, filepath:str):
-        self.__filepath = filepath
-        self.readFinancialDocument()
 
     def readFinancialDocument(self):
         """ Open and read financial document file and extract important data from the text. """
