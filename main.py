@@ -3,6 +3,7 @@ from TithingSlip import TithingSlip
 from SideIncomeStatement import SideIncomeStatement
 
 def main():
-    print("Hello world.")
+    payStub = INOPayStub("payStub.pdf")
+    payStub.createExcelRepresentation()
 
 main()

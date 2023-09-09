@@ -1,4 +1,4 @@
-import datetime, fitz
+import datetime, fitz, pickle
 from FinancialDocumentInterface import FinancialDocumentInterface
 
 class INOPayStub(FinancialDocumentInterface):
@@ -39,6 +39,10 @@ class INOPayStub(FinancialDocumentInterface):
         Create an excel that represents the data contained in this instance of the INOPayStub class.
     """
     
+    def __init__(self, filepath:str):
+        self.__filepath = filepath
+        self.readFinancialDocument()
+
     def __str__(self):
         return f"Filepath: {self.__filepath}\nPre Deduction Pay: {self.__preDeductionPay}\nDeductions: {self.__deductions}\nNet Pay: {self.__netPay}\nStart Date: {self.__startDate}\nEnd Date: {self.__endDate}\nRate: {self.__rate}\nHours: {self.__hours}\n"
 
@@ -98,4 +102,6 @@ class INOPayStub(FinancialDocumentInterface):
     
     def createExcelRepresentation(self):
         """Create an excel that represents the data contained in this instance of the INOPayStub class."""
-        pass
+        with open(".\\Excel Templates\\INOPayStubTemplateWorksheet.obj", "rb") as excelSheetTemplate:
+            payStubTemplateWorksheet = pickle.load(excelSheetTemplate)
+        print("hi")

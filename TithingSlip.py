@@ -25,6 +25,9 @@ class TithingSlip(FinancialDocumentInterface):
     createExcelRepresentation()
         Create an excel that represents the data contained in this instance of the TithingSlip class.
     """
+    def __init__(self, filepath:str):
+        self.__filepath = filepath
+        self.readFinancialDocument()    
 
     def __str__(self):
         return f"Date: {self.__date}\nTithing Amount: {self.__tithingAmount}"
