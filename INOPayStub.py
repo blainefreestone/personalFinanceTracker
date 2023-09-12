@@ -36,7 +36,7 @@ class INOPayStub(FinancialDocumentInterface):
     getSerializeByteStream()
         Serialize this instance of the INOPayStub class as a pickle byte stream which can be saved to a save file.
     createExcelRepresentation()
-        Create an excel that represents the data contained in this instance of the INOPayStub class.
+        Create an excel sheet that represents the data contained in this instance of the INOPayStub class.
     """
     
     def __init__(self, filepath:str):
@@ -101,7 +101,21 @@ class INOPayStub(FinancialDocumentInterface):
         return super().getSerializedByteStream()
     
     def createExcelRepresentation(self):
-        """Create an excel that represents the data contained in this instance of the INOPayStub class."""
-        with open(".\\Excel Templates\\INOPayStubTemplateWorksheet.obj", "rb") as excelSheetTemplate:
-            payStubTemplateWorksheet = pickle.load(excelSheetTemplate)
-        print("hi")
+        """Create an excel sheet that represents the data contained in this instance of the INOPayStub class."""
+        with open(".\\Excel Templates\\INOPayStubTemplateWorksheet.obj", "rb") as paystubExcelSheetTemplate:
+            payStubWorksheet = pickle.load(paystubExcelSheetTemplate)
+            payStubWorksheet['B1'] = self.__startDate.strftime("%d/%m%Y")
+            payStubWorksheet['B2'] = self.__endDate.strftime("%d/%m%Y")
+            payStubWorksheet['B4'] = self.__preDeductionPay
+            payStubWorksheet['B5'] = sum(self.__deductions.values())
+            payStubWorksheet['B6'] = self.__netPay
+            payStubWorksheet['B8'] = self.__hours
+            payStubWorksheet['B9'] = self.__rate
+
+            runningDeductionCount = 0
+            for deduction in self.__deductions:
+                runningDeductionCount += 1
+                payStubWorksheet[f'D{runningDeductionCount + 2}'] = deduction
+                payStubWorksheet[f'E{runningDeductionCount + 2}'] = self.__deductions[deduction]
+
+        return payStubWorksheet
